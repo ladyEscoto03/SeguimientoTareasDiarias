@@ -48,7 +48,16 @@
     <asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" OnClientClick="GuardarTarea(); return false;" />
 
 
-    <asp:Table ID="Table1" runat="server"></asp:Table>
+   <asp:Table ID="Table1" runat="server" CssClass="table" BorderStyle="Solid">
+    <asp:TableHeaderRow>
+        <asp:TableHeaderCell>ID</asp:TableHeaderCell>
+        <asp:TableHeaderCell>Título</asp:TableHeaderCell>
+        <asp:TableHeaderCell>Descripción</asp:TableHeaderCell>
+        <asp:TableHeaderCell>Fecha</asp:TableHeaderCell>
+        <asp:TableHeaderCell>Prioridad</asp:TableHeaderCell>
+        <asp:TableHeaderCell>Estado</asp:TableHeaderCell>
+    </asp:TableHeaderRow>
+</asp:Table>
 
 
 
