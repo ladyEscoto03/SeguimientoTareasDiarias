@@ -17,7 +17,7 @@
             display: flex;
             align-items: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-     <span style="font-size: 18px; margin-right: 10px;">✔</span>
+     <span style="font-size: 18px; margin-right: 10px;"><i class="bi bi-check"></i></span>
      <span>¡Datos guardados con éxito!</span>
 </div>
 
@@ -56,6 +56,7 @@
         <asp:TableHeaderCell>Fecha</asp:TableHeaderCell>
         <asp:TableHeaderCell>Prioridad</asp:TableHeaderCell>
         <asp:TableHeaderCell>Estado</asp:TableHeaderCell>
+        <asp:TableHeaderCell>Acciones</asp:TableHeaderCell>
     </asp:TableHeaderRow>
 </asp:Table>
 
@@ -66,6 +67,59 @@
 
 
     <script>
+
+        $(document).ready(function () {
+            ListarTareas();
+        });
+
+        function ListarTareas() {
+            $.ajax({
+                type: "POST",
+                url: "TareaWebForm.aspx/ListarTareas",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    let tareas = response.d;
+                    let tabla = $("#<%= Table1.ClientID %>");
+                    tabla.find("tr:not(:first)").remove();
+
+                    $.each(tareas, function(index, item) {
+                        var fecha = new Date(
+                            parseInt(item.Fecha.match(/\d+/)[0])
+                        ).toLocaleDateString("es-CR");
+
+                        var fila = "<tr>" +
+                            "<td>" + item.Id + "</td>" +
+                            "<td>" + item.Titulo + "</td>" +
+                            "<td>" + item.Descripcion + "</td>" +
+                            "<td>" + fecha + "</td>" +
+                            "<td>" + item.Prioridad + "</td>" +
+                            "<td>" + item.Estado + "</td>" +
+                            "<td>" +
+                            "<button type='button' class='btn btn-info' onclick='consultarTarea(" + item.Id + ")' title='Consultar'>" +
+                            "<i class='bi bi-eye'></i>" +
+                            "</button> " +
+                            "<button type='button' class='btn btn-danger' onclick='eliminarTarea(" + item.Id + ")' title='Eliminar'>" +
+                            "<i class='bi bi-trash'></i>" +
+                            "</button>" +
+                            "</td>" +
+                            "</tr>";
+
+                        tabla.append(fila);
+                    });
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
         function GuardarTarea() {
             $.ajax({
                 type: "POST",
@@ -83,13 +137,14 @@
                 success: function() {
                     const alerta = document.getElementById('alerta-exito');
 
-              
+
                     alerta.removeAttribute('hidden');
+                    ListarTareas();
 
                  
                     setTimeout(() => {
                         alerta.setAttribute('hidden', 'hidden');
-                    }, 4000);
+                    }, 6000);
                 },
                 error: function(xhr, status, error) {
                
