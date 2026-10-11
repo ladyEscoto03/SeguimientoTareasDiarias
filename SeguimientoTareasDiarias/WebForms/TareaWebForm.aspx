@@ -45,7 +45,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Editar</button>
+                  <button type="button" class="btn btn-primary" onclick="editarTarea()">Guardar cambios</button>
                 </div>
             </div>
         </div>
@@ -139,6 +139,45 @@
             ListarTareas();
         });
 
+        function editarTarea() {
+            $.ajax({
+                type: "POST",
+                url: "TareaWebForm.aspx/EditarTarea",
+                data: JSON.stringify({
+                    idTarea: $("#<%= edit_id.ClientID %>").val(),
+                    titulo: $("#<%= edit_titulo.ClientID %>").val(),
+                    descripcion: $("#<%= edit_descripcion.ClientID %>").val(),
+                    fecha: $("#<%= edit_fecha.ClientID %>").val(),
+                    prioridad: $("#<%= edit_prioridad.ClientID %>").val(),
+                    estado: $("#<%= edit_estado.ClientID %>").val()
+
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    const alerta = document.getElementById('alerta-exito');
+
+                    alerta.removeAttribute('hidden');
+                    ListarTareas();
+                    $("#mensajeExito")
+                        .text("¡Tarea editada correctamente!");
+                    var modalElemento = document.getElementById('modalEditar');
+                    var modal = bootstrap.Modal.getInstance(modalElemento);
+
+                    modal.hide();
+
+                    setTimeout(() => {
+                        alerta.setAttribute('hidden', 'hidden');
+                    }, 6000);
+                },
+                error: function (xhr, status, error) {
+
+                    alert("Error " + xhr.status + ": " + error);
+                }
+
+
+            })
+        }
 
         function abrirModal(id) {
             $.ajax({
@@ -224,7 +263,7 @@
                             "<td>" + item.Prioridad + "</td>" +
                             "<td>" + item.Estado + "</td>" +
                             "<td>" +
-                            "<button type='button' class='btn btn-info' onclick='abrirModal(" + item.Id + ")' title='Editar'>"+
+                            "<button type='button' class='btn btn-info' onclick='abrirModal(" + item.Id + ")' title='Abrir modal'>"+
                             "<i class='bi bi-pencil-square'></i>" +
                             "</button> " +
                             "<button type='button' class='btn btn-danger' onclick='eliminarTarea(" + item.Id + ")' title='Eliminar'>" +

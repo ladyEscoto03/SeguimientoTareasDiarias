@@ -51,9 +51,10 @@ namespace SeguimientoTareasDiarias.WebForms
         }
 
         [WebMethod]
-        public static void editarTarea(int idTarea, string titulo, string descripcion, string fecha, string prioridad, string estado) {
+        public static void EditarTarea(int idTarea, string titulo, string descripcion, string fecha, string prioridad, string estado) {
 
             Tarea tarea = BuscarTarea(idTarea);
+            tarea.Titulo = titulo;
             tarea.Descripcion = descripcion;
             tarea.Fecha = fecha;
             tarea.Prioridad = prioridad;
