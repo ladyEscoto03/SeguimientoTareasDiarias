@@ -1,9 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TareaWebForm.aspx.cs" Inherits="SeguimientoTareasDiarias.WebForms.TareaWebForm" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div role="alert" hidden="hidden" style="border-style: solid; background-color: #008000; color: #FFFFFF; text-decoration: none">
-        hola
-    </div>
+
+
+
+    <div id="alerta-exito" role="alert" hidden="hidden" 
+     style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #d1e7dd; 
+            color: #0f5132; 
+            border: 1px solid #badbcc; 
+            border-radius: 6px; 
+            padding: 15px 20px; 
+            margin: 15px 0; 
+            font-size: 15px; 
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+     <span style="font-size: 18px; margin-right: 10px;">✔</span>
+     <span>¡Datos guardados con éxito!</span>
+</div>
+
     <asp:Label ID="lbl_titulo" runat="server" Text="Ingrese título de la tarea" CssClass="form-label"></asp:Label>
     <asp:TextBox ID="txt_titulo" runat="server" CssClass="form-control"></asp:TextBox>
 
@@ -47,14 +64,19 @@
                 }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function(response) {
-                    alert(response.d);
+                success: function() {
+                    const alerta = document.getElementById('alerta-exito');
+
+              
+                    alerta.removeAttribute('hidden');
+
+                 
+                    setTimeout(() => {
+                        alerta.setAttribute('hidden', 'hidden');
+                    }, 4000);
                 },
                 error: function(xhr, status, error) {
-                    console.log("Status:", status);
-                    console.log("Error:", error);
-                    console.log("Respuesta del servidor:", xhr.responseText);
-
+               
                     alert("Error " + xhr.status + ": " + error);
                 }
 
