@@ -28,6 +28,40 @@
     <asp:ListItem Text="Fallida" Value="Fallida" />
 </asp:DropDownList>
 
-    <asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" />
+    <asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" OnClientClick="GuardarTarea(); return false;" />
+
+
+
+    <script>
+        function GuardarTarea() {
+            $.ajax({
+                type: "POST",
+                url: "TareaWebForm.aspx/GuardarTarea",
+                data: JSON.stringify({
+                    titulo: $("#<%= txt_titulo.ClientID %>").val(),
+                    descripcion: $("#<%= txt_descripcion.ClientID %>").val(),
+                    fecha: $("#<%= txt_fecha.ClientID %>").val(),
+                    prioridad: $("#<%= ddl_prioridad.ClientID %>").val(),
+                    estado: $("#<%= ddl_estado.ClientID %>").val()
+
+                }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    alert(response.d);
+                },
+                error: function(xhr, status, error) {
+                    console.log("Status:", status);
+                    console.log("Error:", error);
+                    console.log("Respuesta del servidor:", xhr.responseText);
+
+                    alert("Error " + xhr.status + ": " + error);
+                }
+
+
+            })
+        }
+    </script>
+
 
 </asp:Content>
