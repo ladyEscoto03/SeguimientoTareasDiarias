@@ -44,5 +44,11 @@ namespace SeguimientoTareasDiarias.WebForms
             ListaTareas.Remove(tarea);
         }
 
+        [WebMethod]
+        public static Tarea BuscarTarea(int idTarea) {
+            Tarea tarea = ListaTareas.Find(t => t.Id == idTarea);
+            return tarea;
+        }
+
     }
 }
