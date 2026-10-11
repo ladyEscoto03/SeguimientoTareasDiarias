@@ -48,6 +48,13 @@
     <asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" OnClientClick="GuardarTarea(); return false;" />
 
 
+    <asp:Table ID="Table1" runat="server"></asp:Table>
+
+
+
+
+
+
 
     <script>
         function GuardarTarea() {

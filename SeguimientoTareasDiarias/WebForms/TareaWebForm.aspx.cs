@@ -1,4 +1,5 @@
-﻿using SeguimientoTareasDiarias.Models;
+﻿using Microsoft.Ajax.Utilities;
+using SeguimientoTareasDiarias.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace SeguimientoTareasDiarias.WebForms
     public partial class TareaWebForm : System.Web.UI.Page
     {
         private static List<Tarea>ListaTareas = new List<Tarea>();
-        private int Id = 1;
+        private static int TareaId = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,6 +22,7 @@ namespace SeguimientoTareasDiarias.WebForms
         public static void GuardarTarea(string titulo, string descripcion, DateTime fecha, string prioridad, string estado)
         {
             Tarea tarea = new Tarea();
+            tarea.Id = ++TareaId;
             tarea.Titulo = titulo;
             tarea.Descripcion = descripcion;
             tarea.Fecha = fecha;
