@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -26,6 +27,11 @@ namespace SeguimientoTareasDiarias.WebForms
             tarea.Estado = estado;
 
             ListaTareas.Add(tarea);
+        }
+        [WebMethod]
+        public static List<Tarea> ListarTareas()
+        {
+            return ListaTareas;
         }
     }
 }
