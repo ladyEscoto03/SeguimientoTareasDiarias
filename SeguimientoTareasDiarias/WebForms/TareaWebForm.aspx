@@ -213,15 +213,13 @@
                     tabla.find("tr:not(:first)").remove();
 
                     $.each(tareas, function(index, item) {
-                        var fecha = new Date(
-                            parseInt(item.Fecha.match(/\d+/)[0])
-                        ).toLocaleDateString("es-CR");
+                       
 
                         var fila = "<tr id='fila-" + item.Id + "'>" +
                             "<td>" + item.Id + "</td>" +
                             "<td>" + item.Titulo + "</td>" +
                             "<td>" + item.Descripcion + "</td>" +
-                            "<td>" + fecha + "</td>" +
+                            "<td>" + item.Fecha + "</td>" +
                             "<td>" + item.Prioridad + "</td>" +
                             "<td>" + item.Estado + "</td>" +
                             "<td>" +

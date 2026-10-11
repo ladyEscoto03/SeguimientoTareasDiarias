@@ -19,7 +19,7 @@ namespace SeguimientoTareasDiarias.WebForms
 
         }
         [WebMethod]
-        public static void GuardarTarea(string titulo, string descripcion, DateTime fecha, string prioridad, string estado)
+        public static void GuardarTarea(string titulo, string descripcion, string fecha, string prioridad, string estado)
         {
             Tarea tarea = new Tarea();
             tarea.Id = ++TareaId;

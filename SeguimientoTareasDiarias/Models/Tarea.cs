@@ -12,7 +12,7 @@ namespace SeguimientoTareasDiarias.Models
 
         public string Descripcion { get; set; }
 
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
 
         public string Prioridad { get; set; }
 
