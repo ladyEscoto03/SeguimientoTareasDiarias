@@ -2,6 +2,73 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
+
+
+
+
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Tarea</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <asp:Label ID="Label6" runat="server" Text="Id asignado a la tarea" CssClass="form-label"></asp:Label>
+                    <asp:TextBox ID="edit_id" runat="server" CssClass="form-control" readonly="true" Enabled="false"></asp:TextBox>
+
+                    <asp:Label ID="Label1" runat="server" Text="Título de la tarea" CssClass="form-label"></asp:Label>
+                    <asp:TextBox ID="edit_titulo" runat="server" CssClass="form-control"></asp:TextBox>
+
+                    <asp:Label ID="Label2" runat="server" Text="Descripcion de la tarea" CssClass="form-label"></asp:Label>
+                    <asp:TextBox ID="edit_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+
+                    <asp:Label ID="Label3" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label"></asp:Label>
+                    <asp:TextBox ID="edit_fecha" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+
+                    <asp:Label ID="Label4" runat="server" Text="Seleccione la prioridad de la tarea" CssClass="form-label"></asp:Label>
+                    <asp:DropDownList ID="edit_prioridad" runat="server" CssClass="form-control">
+                        <asp:ListItem Text="Alta" Value="Alta" />
+                        <asp:ListItem Text="Media" Value="Media" />
+                        <asp:ListItem Text="Baja" Value="Baja" />
+                    </asp:DropDownList>
+
+                    <asp:Label ID="Label5" runat="server" Text="Seleccione el estado de la tarea" CssClass="form-label"></asp:Label>
+                    <asp:DropDownList ID="edit_estado" runat="server" CssClass="form-control">
+                        <asp:ListItem Text="Pendiente" Value="Pendiente" />
+                        <asp:ListItem Text="En ejecución" Value="En ejecución" />
+                        <asp:ListItem Text="Finalizada" Value="Finalizada" />
+                        <asp:ListItem Text="Fallida" Value="Fallida" />
+                    </asp:DropDownList>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <h2>Registre tareas aquí</h2>
 
     <div id="alerta-exito" role="alert" hidden="hidden" 
@@ -72,6 +139,32 @@
             ListarTareas();
         });
 
+        function abrirModal(id) {
+            $.ajax({
+                type: "POST",
+                url: "TareaWebForm.aspx/BuscarTarea",
+                data: JSON.stringify({ idTarea: id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(response) {
+                    var data = response.d;
+                    $("[id$=edit_id]").val(data.Id);
+                    $("[id$=edit_titulo]").val(data.Titulo);
+                    $("[id$=edit_descripcion]").val(data.Descripcion);
+                    $("[id$=edit_fecha]").val(data.Fecha);
+                    $("[id$=edit_prioridad]").val(data.Prioridad);
+                    $("[id$=edit_estado]").val(data.Estado);
+                
+                    var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+                    modal.show();
+                },
+                error: function (xhr, status, error) {
+                    alert("Error al cargar los datos: " + error);
+                }
+            });
+        }
+
+
         function eliminarTarea(id) {
             if (confirm("¿Estás seguro de que deseas eliminar esta tarea?")) {
                 $.ajax({
@@ -132,7 +225,7 @@
                             "<td>" + item.Prioridad + "</td>" +
                             "<td>" + item.Estado + "</td>" +
                             "<td>" +
-                            "<button type='button' class='btn btn-info' onclick='editarTarea(" + item.Id + ")' title='Editar'>" +
+                            "<button type='button' class='btn btn-info' onclick='abrirModal(" + item.Id + ")' title='Editar'>"+
                             "<i class='bi bi-pencil-square'></i>" +
                             "</button> " +
                             "<button type='button' class='btn btn-danger' onclick='eliminarTarea(" + item.Id + ")' title='Eliminar'>" +
@@ -146,7 +239,8 @@
                     });
                 }
             });
-        }
+}
+
 
 
         function GuardarTarea() {
@@ -165,8 +259,7 @@
                 dataType: "json",
                 success: function() {
                     const alerta = document.getElementById('alerta-exito');
-
-
+        
                     alerta.removeAttribute('hidden');
                     ListarTareas();
                     $("#mensajeExito")
