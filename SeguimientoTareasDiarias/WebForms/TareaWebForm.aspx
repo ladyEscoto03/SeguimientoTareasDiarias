@@ -18,7 +18,7 @@
             align-items: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
      <span style="font-size: 18px; margin-right: 10px;"><i class="bi bi-check"></i></span>
-     <span>¡Datos guardados con éxito!</span>
+     <span id="mensajeExito"></span>
 </div>
 
     <asp:Label ID="lbl_titulo" runat="server" Text="Ingrese título de la tarea" CssClass="form-label"></asp:Label>
@@ -72,6 +72,41 @@
             ListarTareas();
         });
 
+        function eliminarTarea(id) {
+            if (confirm("¿Estás seguro de que deseas eliminar esta tarea?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "TareaWebForm.aspx/EliminarTarea",
+                    data: JSON.stringify({ idTarea: id }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        $("#fila-" + id).fadeOut("slow", function () {
+                            $(this).remove();
+                        });
+                        ListarTareas();
+
+                        $("#mensajeExito")
+                            .text("¡Tarea eliminada correctamente!");
+
+                        const alerta = document.getElementById('alerta-exito');
+                        alerta.removeAttribute('hidden');
+
+                        setTimeout(() => {
+                            alerta.setAttribute('hidden', 'hidden');
+                        }, 6000)
+
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error en la petición: ", error);
+
+                    }
+                });
+            }
+        }
+
         function ListarTareas() {
             $.ajax({
                 type: "POST",
@@ -89,7 +124,7 @@
                             parseInt(item.Fecha.match(/\d+/)[0])
                         ).toLocaleDateString("es-CR");
 
-                        var fila = "<tr>" +
+                        var fila = "<tr id='fila-" + item.Id + "'>" +
                             "<td>" + item.Id + "</td>" +
                             "<td>" + item.Titulo + "</td>" +
                             "<td>" + item.Descripcion + "</td>" +
@@ -97,8 +132,8 @@
                             "<td>" + item.Prioridad + "</td>" +
                             "<td>" + item.Estado + "</td>" +
                             "<td>" +
-                            "<button type='button' class='btn btn-info' onclick='consultarTarea(" + item.Id + ")' title='Consultar'>" +
-                            "<i class='bi bi-eye'></i>" +
+                            "<button type='button' class='btn btn-info' onclick='editarTarea(" + item.Id + ")' title='Editar'>" +
+                            "<i class='bi bi-pencil-square'></i>" +
                             "</button> " +
                             "<button type='button' class='btn btn-danger' onclick='eliminarTarea(" + item.Id + ")' title='Eliminar'>" +
                             "<i class='bi bi-trash'></i>" +
@@ -106,18 +141,12 @@
                             "</td>" +
                             "</tr>";
 
+
                         tabla.append(fila);
                     });
                 }
             });
         }
-
-
-
-
-
-
-
 
 
         function GuardarTarea() {
@@ -140,7 +169,8 @@
 
                     alerta.removeAttribute('hidden');
                     ListarTareas();
-
+                    $("#mensajeExito")
+                        .text("¡Tarea registrada correctamente!");
                  
                     setTimeout(() => {
                         alerta.setAttribute('hidden', 'hidden');
