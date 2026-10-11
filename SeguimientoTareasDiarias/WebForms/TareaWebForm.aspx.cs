@@ -16,5 +16,16 @@ namespace SeguimientoTareasDiarias.WebForms
         {
 
         }
+        private static void GuardarTarea(string titulo, string descripcion, DateTime fecha, string prioridad, string estado)
+        {
+            Tarea tarea = new Tarea();
+            tarea.Titulo = titulo;
+            tarea.Descripcion = descripcion;
+            tarea.Fecha = fecha;
+            tarea.Prioridad = prioridad;
+            tarea.Estado = estado;
+
+            ListaTareas.Add(tarea);
+        }
     }
 }
