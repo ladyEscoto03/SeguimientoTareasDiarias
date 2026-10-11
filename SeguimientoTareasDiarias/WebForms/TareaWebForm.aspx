@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
-
+    <h2>Registre tareas aquí</h2>
 
     <div id="alerta-exito" role="alert" hidden="hidden" 
      style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
