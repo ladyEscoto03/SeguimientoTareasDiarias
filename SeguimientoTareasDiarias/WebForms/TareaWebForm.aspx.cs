@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeguimientoTareasDiarias.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,8 @@ namespace SeguimientoTareasDiarias.WebForms
 {
     public partial class TareaWebForm : System.Web.UI.Page
     {
-
+        private static List<Tarea>ListaTareas = new List<Tarea>();
+        private int Id = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
 
