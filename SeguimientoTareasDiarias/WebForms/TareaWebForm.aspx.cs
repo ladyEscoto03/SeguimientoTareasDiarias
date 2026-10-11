@@ -50,5 +50,15 @@ namespace SeguimientoTareasDiarias.WebForms
             return tarea;
         }
 
+        [WebMethod]
+        public static void editarTarea(int idTarea, string titulo, string descripcion, string fecha, string prioridad, string estado) {
+
+            Tarea tarea = BuscarTarea(idTarea);
+            tarea.Descripcion = descripcion;
+            tarea.Fecha = fecha;
+            tarea.Prioridad = prioridad;
+            tarea.Estado = estado;
+
+        }
     }
 }

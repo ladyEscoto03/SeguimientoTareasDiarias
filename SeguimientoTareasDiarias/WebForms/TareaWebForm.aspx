@@ -139,6 +139,7 @@
             ListarTareas();
         });
 
+
         function abrirModal(id) {
             $.ajax({
                 type: "POST",
