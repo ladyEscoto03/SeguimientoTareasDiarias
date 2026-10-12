@@ -154,32 +154,39 @@
 
 
 
-    <div>
-        <h3>Filtrar datos</h3>
+    <div class="card border shadow-sm rounded-2 mb-5">
+        <div class="card-body p-4">
+            <h3 class="h5 fw-semibold text-primary mb-4">Filtrar datos</h3>
 
+            <div class="row g-3 align-items-end">
 
-        <asp:Label ID="Label8" runat="server" Text="Prioridad"></asp:Label>
-        <asp:DropDownList ID="criterio_prioridad" runat="server">
-            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
-            <asp:ListItem Text="Alta" Value="Alta" />
-            <asp:ListItem Text="Media" Value="Media" />
-            <asp:ListItem Text="Baja" Value="Baja" />
-        </asp:DropDownList>
+                <div class="col-12 col-md-5">
+                    <asp:Label ID="Label8" runat="server" Text="Prioridad" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                    <asp:DropDownList ID="criterio_prioridad" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
+                        <asp:ListItem Text="Alta" Value="Alta" />
+                        <asp:ListItem Text="Media" Value="Media" />
+                        <asp:ListItem Text="Baja" Value="Baja" />
+                    </asp:DropDownList>
+                </div>
 
+                <div class="col-12 col-md-5">
+                    <asp:Label ID="Label9" runat="server" Text="Estado" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                    <asp:DropDownList ID="criterio_estado" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
+                        <asp:ListItem Text="Pendiente" Value="Pendiente" />
+                        <asp:ListItem Text="En ejecución" Value="En ejecución" />
+                        <asp:ListItem Text="Finalizada" Value="Finalizada" />
+                        <asp:ListItem Text="Fallida" Value="Fallida" />
+                    </asp:DropDownList>
+                </div>
 
-        <asp:Label ID="Label9" runat="server" Text="Estado"></asp:Label>
-        <asp:DropDownList ID="criterio_estado" runat="server">
-            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
-            <asp:ListItem Text="Pendiente" Value="Pendiente" />
-            <asp:ListItem Text="En ejecución" Value="En ejecución" />
-            <asp:ListItem Text="Finalizada" Value="Finalizada" />
-            <asp:ListItem Text="Fallida" Value="Fallida" />
-        </asp:DropDownList>
+                <div class="col-12 col-md-2">
+                    <asp:Button ID="Button1" runat="server" CssClass="btn btn-primary w-100 fw-semibold" Text="Buscar" OnClientClick="filtrarDatos(); return false;" />
+                </div>
 
-        <asp:Button ID="Button1" runat="server" CssClass="btn-primary" Text="Buscar" OnClientClick="filtrarDatos(); return false;" />
-
-
-
+            </div>
+        </div>
     </div>
 
 
