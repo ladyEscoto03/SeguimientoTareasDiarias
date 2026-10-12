@@ -88,7 +88,10 @@
 
     <h2>Registre tareas aquí</h2>
 
-    <div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+
+        </div>
         <asp:Label ID="lbl_titulo" runat="server" Text="Ingrese título de la tarea" CssClass="form-label"></asp:Label>
         <asp:TextBox ID="txt_titulo" runat="server" CssClass="form-control" ValidationGroup="RegistroTarea"></asp:TextBox>
 
@@ -182,17 +185,26 @@
 
 
 
-    <asp:Table ID="Table1" runat="server" CssClass="table" BorderStyle="Solid">
-        <asp:TableHeaderRow>
-            <asp:TableHeaderCell>ID</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Título</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Descripción</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Fecha</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Prioridad</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Estado</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Acciones</asp:TableHeaderCell>
-        </asp:TableHeaderRow>
-    </asp:Table>
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+        <div class="card-header bg-primary text-white border-0 p-3">
+            <h3 class="h5 mb-0 fw-semibold">Listado de tareas</h3>
+        </div>
+
+        <div class="table-responsive">
+            <asp:Table ID="Table1" runat="server" CssClass="table table-hover table-striped align-middle mb-0" BorderStyle="Solid">
+                <asp:TableHeaderRow CssClass="table-primary">
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary text-nowrap">ID</asp:TableHeaderCell>
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary">Título</asp:TableHeaderCell>
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary">Descripción</asp:TableHeaderCell>
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary text-nowrap">Fecha</asp:TableHeaderCell>
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary">Prioridad</asp:TableHeaderCell>
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary">Estado</asp:TableHeaderCell>
+                    <asp:TableHeaderCell CssClass="fw-semibold text-primary text-nowrap">Acciones</asp:TableHeaderCell>
+                </asp:TableHeaderRow>
+            </asp:Table>
+        </div>
+    </div>
+
 
 
 
