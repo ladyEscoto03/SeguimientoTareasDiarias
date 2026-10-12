@@ -448,6 +448,14 @@
                     setTimeout(() => {
                         alerta.setAttribute('hidden', 'hidden');
                     }, 6000);
+
+      
+                    $('[id$="txt_titulo"]').val('');
+                    $('[id$="txt_descripcion"]').val('');
+                    $('[id$="txt_fecha"]').val('');
+                    $('[id$="ddl_prioridad"]').val('');
+                    $('[id$="ddl_estado"]').val(''); 
+
                 },
                 error: function (xhr, status, error) {
 
