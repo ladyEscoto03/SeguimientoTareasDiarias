@@ -2,11 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-
-
-
-
-
     <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
@@ -33,7 +28,7 @@
 
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="edit_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RequiredFieldValidator>
 
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="edit_descripcion" ValidationExpression="^[\s\S]{10,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres o ser menor a 10 caracteres"  ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="edit_descripcion" ValidationExpression="^[\s\S]{10,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres o ser menor a 10 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RegularExpressionValidator>
                     <br />
 
 
@@ -71,8 +66,6 @@
         </div>
     </div>
 
-
-
     <div id="alerta-exito" role="alert" hidden="hidden"
         style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; border-radius: 6px; padding: 15px 20px; margin: 15px 0; font-size: 15px; font-weight: 500; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
         <span style="font-size: 18px; margin-right: 10px;"><i class="bi bi-check"></i></span>
@@ -85,73 +78,81 @@
         <span id="mensajeError"></span>
     </div>
 
-
-    <h2>Registre tareas aquí</h2>
-
     <div class="container py-5">
         <div class="row justify-content-center">
+            <div class="col-12 col-lg-9 col-xl-8">
+                <div class="card border-0 shadow-sm rounded-4 mb-5">
+                    <div class="card-header bg-primary text-white border-0 rounded-top-4 p-4">
+                        <h2 class="h4 fw-semibold mb-1">Registre tareas aquí</h2>
+                        <p class="mb-0 text-white-50 small">Complete los campos para registrar una nueva tarea.</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <div class="row g-4">
 
+                            <div class="col-12">
+                                <asp:Label ID="lbl_titulo" runat="server" Text="Ingrese título de la tarea" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                                <asp:TextBox ID="txt_titulo" runat="server" CssClass="form-control" ValidationGroup="RegistroTarea"></asp:TextBox>
+
+                                <asp:RequiredFieldValidator ID="rfvTitulo" runat="server" ControlToValidate="txt_titulo" ErrorMessage="Este campo es obligatorio y no puede quedar vacío" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator ID="revTituloExt" runat="server" ControlToValidate="txt_titulo" ValidationExpression=".{5,60}" ErrorMessage="El título debe tener entre 5 y 60 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RegularExpressionValidator>
+                            </div>
+
+                            <div class="col-12">
+                                <asp:Label ID="lbl_descripcion" runat="server" Text="Ingrese una descripcion" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                                <asp:TextBox ID="txt_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine" ValidationGroup="RegistroTarea"></asp:TextBox>
+
+                                <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ControlToValidate="txt_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
+
+                                <asp:RegularExpressionValidator ID="revDescripcionExt" runat="server" ControlToValidate="txt_descripcion" ValidationExpression="^[\s\S]{0,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RegularExpressionValidator>
+                            </div>
+                            <div class="col-12">
+                                <asp:Label ID="lbl_fecha" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                                <asp:TextBox ID="txt_fecha" runat="server" CssClass="form-control" TextMode="Date" ValidationGroup="RegistroTarea"></asp:TextBox>
+
+                                <asp:RequiredFieldValidator ID="rfvFecha" runat="server" ControlToValidate="txt_fecha" ErrorMessage="La fecha es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <asp:Label ID="lbl_prioridad" runat="server" Text="Seleccione la prioridad de la tarea" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                                <asp:DropDownList ID="ddl_prioridad" runat="server" CssClass="form-select" ValidationGroup="RegistroTarea">
+                                    <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
+                                    <asp:ListItem Text="Alta" Value="Alta" />
+                                    <asp:ListItem Text="Media" Value="Media" />
+                                    <asp:ListItem Text="Baja" Value="Baja" />
+                                </asp:DropDownList>
+
+                                <asp:RequiredFieldValidator ID="rfvPrioridad" runat="server" ControlToValidate="ddl_prioridad" InitialValue="" ErrorMessage="Debe seleccionar una prioridad" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <asp:Label ID="lbl_estado" runat="server" Text="Seleccione el estado de la tarea" CssClass="form-label fw-semibold text-secondary"></asp:Label>
+                                <asp:DropDownList ID="ddl_estado" runat="server" CssClass="form-select" ValidationGroup="RegistroTarea">
+                                    <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
+                                    <asp:ListItem Text="Pendiente" Value="Pendiente" />
+                                    <asp:ListItem Text="En ejecución" Value="En ejecución" />
+                                    <asp:ListItem Text="Finalizada" Value="Finalizada" />
+                                    <asp:ListItem Text="Fallida" Value="Fallida" />
+                                </asp:DropDownList>
+
+                                <asp:RequiredFieldValidator ID="rfvEstado" runat="server" ControlToValidate="ddl_estado" InitialValue="" ErrorMessage="Debe seleccionar un estado" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
+                            </div>
+                            <div class="col-12 pt-2">
+                                <asp:Button
+                                    ID="btn_submit"
+                                    runat="server"
+                                    CssClass="btn btn-primary w-100 py-2 fw-semibold"
+                                    Text="Registrar tarea"
+                                    OnClientClick="if (!Page_ClientValidate('RegistroTarea')) return false; GuardarTarea(); return false;"
+                                    ValidationGroup="RegistroTarea"
+                                    CausesValidation="true" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <asp:Label ID="lbl_titulo" runat="server" Text="Ingrese título de la tarea" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="txt_titulo" runat="server" CssClass="form-control" ValidationGroup="RegistroTarea"></asp:TextBox>
-
-        <asp:RequiredFieldValidator ID="rfvTitulo" runat="server" ControlToValidate="txt_titulo" ErrorMessage="Este campo es obligatorio y no puede quedar vacío" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="revTituloExt" runat="server" ControlToValidate="txt_titulo" ValidationExpression=".{5,60}" ErrorMessage="El título debe tener entre 5 y 60 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RegularExpressionValidator>
-        <br />
-
-
-
-        <asp:Label ID="lbl_descripcion" runat="server" Text="Ingrese una descripcion" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="txt_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine" ValidationGroup="RegistroTarea"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ControlToValidate="txt_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
-
-        <asp:RegularExpressionValidator ID="revDescripcionExt" runat="server" ControlToValidate="txt_descripcion" ValidationExpression="^[\s\S]{10,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres o ser menor a 10 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RegularExpressionValidator>
-        <br />
-        <asp:Label ID="lbl_fecha" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="txt_fecha" runat="server" CssClass="form-control" TextMode="Date" ValidationGroup="RegistroTarea"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="rfvFecha" runat="server" ControlToValidate="txt_fecha" ErrorMessage="La fecha es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
-        <br />
-        <asp:Label ID="lbl_prioridad" runat="server" Text="Seleccione la prioridad de la tarea" CssClass="form-label"></asp:Label>
-        <asp:DropDownList ID="ddl_prioridad" runat="server" CssClass="form-control" ValidationGroup="RegistroTarea">
-            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
-            <asp:ListItem Text="Alta" Value="Alta" />
-            <asp:ListItem Text="Media" Value="Media" />
-            <asp:ListItem Text="Baja" Value="Baja" />
-        </asp:DropDownList>
-        <asp:RequiredFieldValidator ID="rfvPrioridad" runat="server" ControlToValidate="ddl_prioridad" InitialValue="" ErrorMessage="Debe seleccionar una prioridad" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
-
-        <br />
-        <asp:Label ID="lbl_estado" runat="server" Text="Seleccione el estado de la tarea" CssClass="form-label"></asp:Label>
-        <asp:DropDownList ID="ddl_estado" runat="server" CssClass="form-control" ValidationGroup="RegistroTarea">
-            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
-            <asp:ListItem Text="Pendiente" Value="Pendiente" />
-            <asp:ListItem Text="En ejecución" Value="En ejecución" />
-            <asp:ListItem Text="Finalizada" Value="Finalizada" />
-            <asp:ListItem Text="Fallida" Value="Fallida" />
-        </asp:DropDownList>
-        <asp:RequiredFieldValidator ID="rfvEstado" runat="server" ControlToValidate="ddl_estado" InitialValue="" ErrorMessage="Debe seleccionar un estado" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
-        <br />
-        <asp:Button
-            ID="btn_submit"
-            runat="server"
-            CssClass="btn-primary"
-            Text="Registrar tarea"
-            OnClientClick="if (!Page_ClientValidate('RegistroTarea')) return false; GuardarTarea();"
-            ValidationGroup="RegistroTarea"
-            CausesValidation="true" />
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
     <div class="card border shadow-sm rounded-2 mb-5">
@@ -190,8 +191,6 @@
     </div>
 
 
-
-
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
         <div class="card-header bg-primary text-white border-0 p-3">
             <h3 class="h5 mb-0 fw-semibold">Listado de tareas</h3>
@@ -212,27 +211,16 @@
         </div>
     </div>
 
-
-
-
-
     <script>
 
         $(document).ready(function () {
             ListarTareas();
         });
 
-
-
-
-
         function filtrarDatos() {
-
-
             var prioridad = $("#<%= criterio_prioridad.ClientID %>").val();
             var estado = $("#<%= criterio_estado.ClientID %>").val();
             const alerta = document.getElementById('alerta-error');
-
 
             var datosEnviar = {
 
@@ -296,10 +284,6 @@
             });
 
         }
-
-
-
-
 
         function editarTarea() {
             $.ajax({
