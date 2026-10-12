@@ -72,12 +72,6 @@
         <span id="mensajeExito"></span>
     </div>
 
-    <div id="alerta-error" role="alert" hidden="hidden"
-        style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; border-radius: 6px; padding: 15px 20px; margin: 15px 0; font-size: 15px; font-weight: 500; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-        <span style="font-size: 18px; margin-right: 10px;"><i class="bi bi-exclamation-triangle"></i></span>
-        <span id="mensajeError"></span>
-    </div>
-
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xl-8">
@@ -190,6 +184,11 @@
         </div>
     </div>
 
+    <div id="alerta-error" role="alert" hidden="hidden"
+        style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; border-radius: 6px; padding: 15px 20px; margin: 15px 0; font-size: 15px; font-weight: 500; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <span style="font-size: 18px; margin-right: 10px;"><i class="bi bi-exclamation-triangle"></i></span>
+        <span id="mensajeError"></span>
+    </div>
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
         <div class="card-header bg-primary text-white border-0 p-3">
