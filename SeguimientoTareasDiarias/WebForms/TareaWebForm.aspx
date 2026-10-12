@@ -171,7 +171,7 @@
           
             var prioridad = $("#<%= criterio_prioridad.ClientID %>").val();
             var estado = $("#<%= criterio_estado.ClientID %>").val();
-           
+            const alerta = document.getElementById('alerta-error');
 
 
             var datosEnviar = {
@@ -199,10 +199,12 @@
                         $("#mensajeError").text(
                             "No hay coincidencias con los datos buscados"
                         );
+                        setTimeout(() => {
+                            alerta.setAttribute('hidden', 'hidden');
+                        }, 6000);
                         return;
                     }
-
-                    $("#alerta-error").attr("hidden", true);
+                  
 
                     $.each(listaTareas, function (index, item) {
 
