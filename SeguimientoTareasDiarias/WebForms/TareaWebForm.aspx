@@ -71,34 +71,50 @@
 
     <div>
         <asp:Label ID="lbl_titulo" runat="server" Text="Ingrese título de la tarea" CssClass="form-label"></asp:Label>
-<asp:TextBox ID="txt_titulo" runat="server" CssClass="form-control"></asp:TextBox>
+        <asp:TextBox ID="txt_titulo" runat="server" CssClass="form-control"></asp:TextBox>
 
-<asp:Label ID="lbl_descripcion" runat="server" Text="Ingrese una descripcion" CssClass="form-label"></asp:Label>
-<asp:TextBox ID="txt_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvTitulo" runat="server" ControlToValidate="txt_titulo" ErrorMessage="Este campo es obligatorio y no puede quedar vacío" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="revTituloExt" runat="server" ControlToValidate="txt_titulo" ValidationExpression=".{5,60}" ErrorMessage="El título debe tener entre 5 y 60 caracteres" ForeColor="Red" Display="Dynamic"></asp:RegularExpressionValidator>
+        <br />
 
-<asp:Label ID="lbl_fecha" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label"></asp:Label>
-<asp:TextBox ID="txt_fecha" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
 
-<asp:Label ID="lbl_prioridad" runat="server" Text="Seleccione la prioridad de la tarea" CssClass="form-label"></asp:Label>
-<asp:DropDownList ID="ddl_prioridad" runat="server" CssClass="form-control">
-    <asp:ListItem Text="Alta" Value="Alta" />
-    <asp:ListItem Text="Media" Value="Media" />
-    <asp:ListItem Text="Baja" Value="Baja" />
-</asp:DropDownList>
 
-<asp:Label ID="lbl_estado" runat="server" Text="Seleccione el estado de la tarea" CssClass="form-label"></asp:Label>
-<asp:DropDownList ID="ddl_estado" runat="server" CssClass="form-control">
-    <asp:ListItem Text="Pendiente" Value="Pendiente" />
-    <asp:ListItem Text="En ejecución" Value="En ejecución" />
-    <asp:ListItem Text="Finalizada" Value="Finalizada" />
-    <asp:ListItem Text="Fallida" Value="Fallida" />
-</asp:DropDownList>
+        <asp:Label ID="lbl_descripcion" runat="server" Text="Ingrese una descripcion" CssClass="form-label"></asp:Label>
+        <asp:TextBox ID="txt_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ControlToValidate="txt_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
 
-<asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" OnClientClick="GuardarTarea(); return false;" />
+        <asp:RegularExpressionValidator ID="revDescripcionExt" runat="server" ControlToValidate="txt_descripcion" ValidationExpression="^[\s\S]{0,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres" ForeColor="Red" Display="Dynamic"></asp:RegularExpressionValidator>
+        <br />
+        <asp:Label ID="lbl_fecha" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label"></asp:Label>
+        <asp:TextBox ID="txt_fecha" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvFecha" runat="server" ControlToValidate="txt_fecha" ErrorMessage="La fecha es obligatoria" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+        <br />
+        <asp:Label ID="lbl_prioridad" runat="server" Text="Seleccione la prioridad de la tarea" CssClass="form-label"></asp:Label>
+        <asp:DropDownList ID="ddl_prioridad" runat="server" CssClass="form-control">
+            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
+            <asp:ListItem Text="Alta" Value="Alta" />
+            <asp:ListItem Text="Media" Value="Media" />
+            <asp:ListItem Text="Baja" Value="Baja" />
+        </asp:DropDownList>
+        <asp:RequiredFieldValidator ID="rfvPrioridad" runat="server" ControlToValidate="ddl_prioridad" InitialValue="" ErrorMessage="Debe seleccionar una prioridad" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+
+        <br />
+        <asp:Label ID="lbl_estado" runat="server" Text="Seleccione el estado de la tarea" CssClass="form-label"></asp:Label>
+        <asp:DropDownList ID="ddl_estado" runat="server" CssClass="form-control">
+            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
+            <asp:ListItem Text="Pendiente" Value="Pendiente" />
+            <asp:ListItem Text="En ejecución" Value="En ejecución" />
+            <asp:ListItem Text="Finalizada" Value="Finalizada" />
+            <asp:ListItem Text="Fallida" Value="Fallida" />
+        </asp:DropDownList>
+        <asp:RequiredFieldValidator ID="rfvEstado" runat="server" ControlToValidate="ddl_estado" InitialValue="" ErrorMessage="Debe seleccionar un estado" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
+        <br />
+        <asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" OnClientClick="if (!Page_ClientValidate()) return false; GuardarTarea();" CausesValidation="true" />
+
 
     </div>
 
-    
+
 
 
 
@@ -116,7 +132,7 @@
 
         <asp:Label ID="Label8" runat="server" Text="Prioridad"></asp:Label>
         <asp:DropDownList ID="criterio_prioridad" runat="server">
-            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True"/>
+            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
             <asp:ListItem Text="Alta" Value="Alta" />
             <asp:ListItem Text="Media" Value="Media" />
             <asp:ListItem Text="Baja" Value="Baja" />
@@ -125,7 +141,7 @@
 
         <asp:Label ID="Label9" runat="server" Text="Estado"></asp:Label>
         <asp:DropDownList ID="criterio_estado" runat="server">
-            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True"/>
+            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True" />
             <asp:ListItem Text="Pendiente" Value="Pendiente" />
             <asp:ListItem Text="En ejecución" Value="En ejecución" />
             <asp:ListItem Text="Finalizada" Value="Finalizada" />
@@ -167,15 +183,15 @@
 
 
         function filtrarDatos() {
-        
-          
+
+
             var prioridad = $("#<%= criterio_prioridad.ClientID %>").val();
             var estado = $("#<%= criterio_estado.ClientID %>").val();
             const alerta = document.getElementById('alerta-error');
 
 
             var datosEnviar = {
-             
+
                 prioridad: prioridad,
                 estado: estado
             };
@@ -204,7 +220,7 @@
                         }, 6000);
                         return;
                     }
-                  
+
 
                     $.each(listaTareas, function (index, item) {
 
