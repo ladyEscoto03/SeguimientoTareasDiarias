@@ -60,6 +60,13 @@
         <span id="mensajeExito"></span>
     </div>
 
+    <div id="alerta-error" role="alert" hidden="hidden"
+        style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; border-radius: 6px; padding: 15px 20px; margin: 15px 0; font-size: 15px; font-weight: 500; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <span style="font-size: 18px; margin-right: 10px;"><i class="bi bi-exclamation-triangle"></i></span>
+        <span id="mensajeError"></span>
+    </div>
+
+
     <h2>Registre tareas aquí</h2>
 
     <div>
@@ -105,12 +112,11 @@
 
     <div>
         <h3>Filtrar datos</h3>
-        <asp:Label ID="Label7" runat="server" Text="Buscar"></asp:Label>
-        <asp:TextBox ID="criterio_buscar" runat="server"></asp:TextBox>
 
 
         <asp:Label ID="Label8" runat="server" Text="Prioridad"></asp:Label>
         <asp:DropDownList ID="criterio_prioridad" runat="server">
+            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True"/>
             <asp:ListItem Text="Alta" Value="Alta" />
             <asp:ListItem Text="Media" Value="Media" />
             <asp:ListItem Text="Baja" Value="Baja" />
@@ -119,12 +125,14 @@
 
         <asp:Label ID="Label9" runat="server" Text="Estado"></asp:Label>
         <asp:DropDownList ID="criterio_estado" runat="server">
+            <asp:ListItem Text="Seleccione una opción" Value="" Selected="True"/>
             <asp:ListItem Text="Pendiente" Value="Pendiente" />
             <asp:ListItem Text="En ejecución" Value="En ejecución" />
             <asp:ListItem Text="Finalizada" Value="Finalizada" />
             <asp:ListItem Text="Fallida" Value="Fallida" />
         </asp:DropDownList>
 
+        <asp:Button ID="Button1" runat="server" CssClass="btn-primary" Text="Buscar" OnClientClick="filtrarDatos(); return false;" />
 
 
 
@@ -159,6 +167,71 @@
 
 
         function filtrarDatos() {
+        
+          
+            var prioridad = $("#<%= criterio_prioridad.ClientID %>").val();
+            var estado = $("#<%= criterio_estado.ClientID %>").val();
+           
+
+
+            var datosEnviar = {
+             
+                prioridad: prioridad,
+                estado: estado
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "TareaWebForm.aspx/FiltroTareas",
+                data: JSON.stringify(datosEnviar),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (response) {
+
+                    var listaTareas = response.d;
+                    var tabla = $("#<%= Table1.ClientID %>");
+
+                    tabla.find("tr:not(:first)").remove();
+
+                    if (listaTareas.length === 0) {
+                        $("#alerta-error").removeAttr("hidden");
+                        $("#mensajeError").text(
+                            "No hay coincidencias con los datos buscados"
+                        );
+                        return;
+                    }
+
+                    $("#alerta-error").attr("hidden", true);
+
+                    $.each(listaTareas, function (index, item) {
+
+                        var fila = "<tr id='fila-" + item.Id + "'>" +
+                            "<td>" + item.Id + "</td>" +
+                            "<td>" + item.Titulo + "</td>" +
+                            "<td>" + item.Descripcion + "</td>" +
+                            "<td>" + item.Fecha + "</td>" +
+                            "<td>" + item.Prioridad + "</td>" +
+                            "<td>" + item.Estado + "</td>" +
+                            "<td>" +
+                            "<button type='button' class='btn btn-info' onclick='abrirModal(" + item.Id + ")' title='Abrir modal'>" +
+                            "<i class='bi bi-pencil-square'></i>" +
+                            "</button> " +
+                            "<button type='button' class='btn btn-danger' onclick='eliminarTarea(" + item.Id + ")' title='Eliminar'>" +
+                            "<i class='bi bi-trash'></i>" +
+                            "</button>" +
+                            "</td>" +
+                            "</tr>";
+
+                        tabla.append(fila);
+                    });
+                },
+
+                error: function (xhr, status, error) {
+                    console.error("Error al buscar tareas:", error);
+                    console.error(xhr.responseText);
+                }
+            });
 
         }
 

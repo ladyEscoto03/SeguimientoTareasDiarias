@@ -63,27 +63,24 @@ namespace SeguimientoTareasDiarias.WebForms
 
         }
         [WebMethod]
-        public static List<Tarea> FiltroTareas( string criterio, string prioridad, string estado)
+        public static List<Tarea> FiltroTareas(string prioridad, string estado)
         {
-            int numero;
-
-            bool EsNumero = int.TryParse(criterio, out numero);
+          
 
             List<Tarea> listaResultadoTareas = new List<Tarea>();
 
-            if (EsNumero)
-            {
 
-                if (BuscarTarea(numero)!=null)
+            foreach (Tarea item in ListaTareas)
+            {
+                if (string.IsNullOrEmpty(prioridad) || item.Prioridad == prioridad)
                 {
-                    listaResultadoTareas.Add(BuscarTarea(numero));
+                    if (string.IsNullOrEmpty(estado) || item.Estado == estado)
+                    {
+                        listaResultadoTareas.Add(item);
+                    }
                 }
+            }
 
-            }
-            else
-            {
-                listaResultadoTareas = ListaTareas.Where(t =>(t.Titulo != null && t.Titulo.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0) ||(t.Descripcion != null && t.Descripcion.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
-            }
 
             return listaResultadoTareas; 
         }
