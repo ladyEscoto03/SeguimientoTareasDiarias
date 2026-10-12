@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SeguimientoTareasDiarias.WebForms
 {
@@ -60,6 +61,31 @@ namespace SeguimientoTareasDiarias.WebForms
             tarea.Prioridad = prioridad;
             tarea.Estado = estado;
 
+        }
+        [WebMethod]
+        public static List<Tarea> FiltroTareas( string criterio, string prioridad, string estado)
+        {
+            int numero;
+
+            bool EsNumero = int.TryParse(criterio, out numero);
+
+            List<Tarea> listaResultadoTareas = new List<Tarea>();
+
+            if (EsNumero)
+            {
+
+                if (BuscarTarea(numero)!=null)
+                {
+                    listaResultadoTareas.Add(BuscarTarea(numero));
+                }
+
+            }
+            else
+            {
+                listaResultadoTareas = ListaTareas.Where(t =>(t.Titulo != null && t.Titulo.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0) ||(t.Descripcion != null && t.Descripcion.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
+            }
+
+            return listaResultadoTareas; 
         }
     }
 }
