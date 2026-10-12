@@ -33,7 +33,7 @@
 
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="edit_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RequiredFieldValidator>
 
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="edit_descripcion" ValidationExpression="^[\s\S]{0,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="edit_descripcion" ValidationExpression="^[\s\S]{10,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres o ser menor a 10 caracteres"  ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RegularExpressionValidator>
                     <br />
 
 
@@ -102,7 +102,7 @@
         <asp:TextBox ID="txt_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine" ValidationGroup="RegistroTarea"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvDescripcion" runat="server" ControlToValidate="txt_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
 
-        <asp:RegularExpressionValidator ID="revDescripcionExt" runat="server" ControlToValidate="txt_descripcion" ValidationExpression="^[\s\S]{0,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RegularExpressionValidator>
+        <asp:RegularExpressionValidator ID="revDescripcionExt" runat="server" ControlToValidate="txt_descripcion" ValidationExpression="^[\s\S]{10,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres o ser menor a 10 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RegularExpressionValidator>
         <br />
         <asp:Label ID="lbl_fecha" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label"></asp:Label>
         <asp:TextBox ID="txt_fecha" runat="server" CssClass="form-control" TextMode="Date" ValidationGroup="RegistroTarea"></asp:TextBox>
