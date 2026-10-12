@@ -20,13 +20,29 @@
                     <asp:TextBox ID="edit_id" runat="server" CssClass="form-control" ReadOnly="true" Enabled="false"></asp:TextBox>
 
                     <asp:Label ID="Label1" runat="server" Text="Título de la tarea" CssClass="form-label"></asp:Label>
-                    <asp:TextBox ID="edit_titulo" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:TextBox ID="edit_titulo" runat="server" CssClass="form-control" ValidationGroup="EditarTarea"></asp:TextBox>
+
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="edit_titulo" ErrorMessage="Este campo es obligatorio y no puede quedar vacío" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="edit_titulo" ValidationExpression=".{5,60}" ErrorMessage="El título debe tener entre 5 y 60 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RegularExpressionValidator>
+                    <br />
+
 
                     <asp:Label ID="Label2" runat="server" Text="Descripcion de la tarea" CssClass="form-label"></asp:Label>
-                    <asp:TextBox ID="edit_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine"></asp:TextBox>
+                    <asp:TextBox ID="edit_descripcion" runat="server" CssClass="form-control" TextMode="MultiLine" ValidationGroup="EditarTarea"></asp:TextBox>
+
+
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="edit_descripcion" ErrorMessage="La descripción es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RequiredFieldValidator>
+
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="edit_descripcion" ValidationExpression="^[\s\S]{0,250}$" ErrorMessage="La descripción no puede superar los 250 caracteres" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RegularExpressionValidator>
+                    <br />
+
 
                     <asp:Label ID="Label3" runat="server" Text="Ingrese la fecha en que se debe hacer la tarea" CssClass="form-label"></asp:Label>
-                    <asp:TextBox ID="edit_fecha" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+                    <asp:TextBox ID="edit_fecha" runat="server" CssClass="form-control" TextMode="Date" ValidationGroup="EditarTarea"></asp:TextBox>
+
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="edit_fecha" ErrorMessage="La fecha es obligatoria" ForeColor="Red" Display="Dynamic" ValidationGroup="EditarTarea"></asp:RequiredFieldValidator>
+                    <br />
+
 
                     <asp:Label ID="Label4" runat="server" Text="Seleccione la prioridad de la tarea" CssClass="form-label"></asp:Label>
                     <asp:DropDownList ID="edit_prioridad" runat="server" CssClass="form-control">
@@ -46,7 +62,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="editarTarea()">Guardar cambios</button>
+                    <button type="button" class="btn btn-primary"
+                        onclick="if (!Page_ClientValidate('EditarTarea')) return false; editarTarea();">
+                        Guardar cambios
+                    </button>
                 </div>
             </div>
         </div>
@@ -109,8 +128,14 @@
         </asp:DropDownList>
         <asp:RequiredFieldValidator ID="rfvEstado" runat="server" ControlToValidate="ddl_estado" InitialValue="" ErrorMessage="Debe seleccionar un estado" ForeColor="Red" Display="Dynamic" ValidationGroup="RegistroTarea"></asp:RequiredFieldValidator>
         <br />
-        <asp:Button ID="btn_submit" runat="server" CssClass="btn-primary" Text="Registrar tarea" OnClientClick="if (!Page_ClientValidate()) return false; GuardarTarea();" ValidationGroup="RegistroTarea" CausesValidation="true" />
-
+        <asp:Button
+            ID="btn_submit"
+            runat="server"
+            CssClass="btn-primary"
+            Text="Registrar tarea"
+            OnClientClick="if (!Page_ClientValidate('RegistroTarea')) return false; GuardarTarea();"
+            ValidationGroup="RegistroTarea"
+            CausesValidation="true" />
 
     </div>
 
